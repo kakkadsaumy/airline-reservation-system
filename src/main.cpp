@@ -1,78 +1,35 @@
 #include <iostream>
 #include <vector>
-#include <string>
+#include "flight.h"
+#include "pricing.h"
 
 using namespace std;
 
-class Flight {
-public:
-    int id;
-    string source;
-    string destination;
-    int totalSeats;
-    int availableSeats;
-    double basePrice;
-
-    Flight(int id, string src, string dest, int seats, double price) {
-        this->id = id;
-        source = src;
-        destination = dest;
-        totalSeats = seats;
-        availableSeats = seats;
-        basePrice = price;
-    }
-
-    void displayFlight() {
-        cout << "Flight ID: " << id << endl;
-        cout << "Route: " << source << " -> " << destination << endl;
-        cout << "Available Seats: " << availableSeats << "/" << totalSeats << endl;
-        cout << "Base Price: " << basePrice << endl;
-        cout << "-------------------------" << endl;
-    }
-};
-
-class Booking {
-public:
-    int bookingId;
-    int flightId;
-    int seatNumber;
-
-    Booking(int bId, int fId, int seat) {
-        bookingId = bId;
-        flightId = fId;
-        seatNumber = seat;
-    }
-};
-
-class Pricing {
-public:
-    static double calculatePrice(double basePrice, int bookedSeats, int totalSeats) {
-        double demandFactor = (double)bookedSeats / totalSeats;
-        return basePrice * (1 + demandFactor);
-    }
-};
-
 int main() {
-    cout << "Airline Reservation System Initialized" << endl;
-    cout << "--------------------------------------" << endl;
 
     vector<Flight> flights;
 
     flights.push_back(Flight(1, "Delhi", "Mumbai", 100, 5000));
     flights.push_back(Flight(2, "Mumbai", "Bangalore", 120, 4500));
 
-    cout << "\nAvailable Flights:\n" << endl;
+    cout << "Available Flights:\n" << endl;
+
     for (auto &f : flights) {
         f.displayFlight();
     }
 
-    int selectedFlight = 1;
-    int seatNumber = 1;
-
-    cout << "\nBooking seat " << seatNumber << " on Flight " << selectedFlight << endl;
+    int choice;
+    cout << "\nEnter Flight ID to book: ";
+    cin >> choice;
 
     for (auto &f : flights) {
-        if (f.id == selectedFlight && f.availableSeats > 0) {
+        if (f.id == choice) {
+
+            if (f.availableSeats <= 0) {
+                cout << "No seats available!" << endl;
+                return 0;
+            }
+
             f.availableSeats--;
 
             double newPrice = Pricing::calculatePrice(
@@ -81,7 +38,7 @@ int main() {
                 f.totalSeats
             );
 
-            cout << "Booking successful!" << endl;
+            cout << "\nBooking Successful!" << endl;
             cout << "Updated Price: " << newPrice << endl;
         }
     }

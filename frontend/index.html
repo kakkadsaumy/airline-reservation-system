@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Airline System</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+</head>
+<body>
+
+<h1>Flights</h1>
+
+<div id="flights">
+    <button onclick="book()">Book Delhi → Mumbai</button>
+</div>
+
+<h2 id="result"></h2>
+
+<script>
+function book() {
+    document.getElementById("result").innerText = "Booking Successful!";
+
+    anime({
+        targets: '#result',
+        translateY: [-20, 0],
+        opacity: [0, 1],
+        duration: 800
+    });
+}
+</script>
+
+</body>
+</html>

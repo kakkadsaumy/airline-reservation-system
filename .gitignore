@@ -1,0 +1,18 @@
+# Compiled files
+*.exe
+*.out
+*.o
+
+# Build folders
+build/
+bin/
+
+# Logs
+*.log
+
+# VS Code settings (optional)
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="style.css">
     <title>Airline System</title>
+    <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 </head>
 <body>
@@ -10,24 +10,13 @@
 <h1>Flights</h1>
 
 <div id="flights">
-    <button onclick="book()">Delhi → Mumbai</button>
-    <button onclick="book()">Mumbai → Bangalore</button>
+    <button onclick="bookFlight('Delhi → Mumbai')">Delhi → Mumbai</button>
+    <button onclick="bookFlight('Mumbai → Bangalore')">Mumbai → Bangalore</button>
 </div>
 
 <h2 id="result"></h2>
 
-<script>
-function book() {
-    document.getElementById("result").innerText = "Booking Successful!";
-
-    anime({
-        targets: '#result',
-        translateY: [-20, 0],
-        opacity: [0, 1],
-        duration: 800
-    });
-}
-</script>
+<script src="script.js"></script>
 
 </body>
 </html>

@@ -3,7 +3,7 @@
 
 class Pricing {
 public:
-    static double calculatePrice(double basePrice, int bookedSeats, int totalSeats);
+    static double calculatePrice(double basePrice, int bookedSeats, int totalSeats, int distance);
 };
 
 #endif

@@ -2,6 +2,7 @@
 #include <vector>
 #include "flight.h"
 #include "pricing.h"
+#include "graph.h"
 
 using namespace std;
 
@@ -18,12 +19,37 @@ int main() {
         f.displayFlight();
     }
 
+    Graph g;
+
+    g.addEdge("Delhi", "Mumbai", 10);
+    g.addEdge("Mumbai", "Delhi", 10);
+
+    g.addEdge("Mumbai", "Bangalore", 8);
+    g.addEdge("Bangalore", "Mumbai", 8);
+
+    g.addEdge("Delhi", "Bangalore", 25);
+    g.addEdge("Bangalore", "Delhi", 25);
+
+    string start, end;
+
+    cout << "\nEnter source city: ";
+    cin >> start;
+
+    cout << "Enter destination city: ";
+    cin >> end;
+
+    cout << "\nOptimized Route:\n";
+    g.shortestPath(start, end);
+
     int choice;
     cout << "\nEnter Flight ID to book: ";
     cin >> choice;
 
+    bool found = false;
+
     for (auto &f : flights) {
         if (f.id == choice) {
+            found = true;
 
             if (f.availableSeats <= 0) {
                 cout << "No seats available!" << endl;
@@ -40,7 +66,12 @@ int main() {
 
             cout << "\nBooking Successful!" << endl;
             cout << "Updated Price: " << newPrice << endl;
+            cout << "Remaining Seats: " << f.availableSeats << endl;
         }
+    }
+
+    if (!found) {
+        cout << "Invalid Flight ID" << endl;
     }
 
     return 0;

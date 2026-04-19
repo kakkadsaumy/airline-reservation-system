@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Airline System</title>
+    <title>Airline Booking</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 </head>
 <body>
 
-<h1>Flights</h1>
+<h1>✈️ Airline Booking</h1>
 
-<div id="flights">
-    <button onclick="bookFlight('Delhi → Mumbai')">Delhi → Mumbai</button>
-    <button onclick="bookFlight('Mumbai → Bangalore')">Mumbai → Bangalore</button>
+<div class="search-box">
+    <select id="source"></select>
+    <select id="destination"></select>
+    <button onclick="loadRoutes()">Search Flights</button>
 </div>
 
-<h2 id="result"></h2>
+<div id="routesContainer" class="routes"></div>
 
 <script src="script.js"></script>
 

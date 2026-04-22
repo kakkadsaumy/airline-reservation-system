@@ -41,3 +41,24 @@ button {
     margin-top: 10px;
     width: 100%;
 }
+
+#bookingCard {
+    display: flex;
+    justify-content: center;
+}
+
+.card {
+    margin: auto;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+form input, form select {
+    width: 300px;
+    padding: 10px;
+    margin: 5px;
+}

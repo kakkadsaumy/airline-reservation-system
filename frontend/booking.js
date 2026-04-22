@@ -1,3 +1,10 @@
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+
+const supabase = createClient(
+    "https://fybivbxhdfwlhoifnhdo.supabase.co",
+    "sb_publishable_DfEaxwx0nn6jmV0gRHxqyQ_qysTuL-6"
+);
+
 const route = JSON.parse(localStorage.getItem("selectedRoute"));
 let selectedClass = null;
 
@@ -23,19 +30,19 @@ container.innerHTML = `
 </div>
 `;
 
-function choose(type) {
+window.choose = function(type) {
     selectedClass = type;
     generateForm();
-}
+};
 
 function generateForm() {
 
     const form = document.getElementById("form");
     form.innerHTML = "";
 
-    let passengerCount = prompt("Number of passengers:");
+    let count = prompt("Number of passengers:");
 
-    for (let i = 0; i < passengerCount; i++) {
+    for (let i = 0; i < count; i++) {
 
         form.innerHTML += `
         <h3>Passenger ${i+1}</h3>
@@ -64,11 +71,11 @@ function generateForm() {
 
     form.onsubmit = function(e) {
         e.preventDefault();
-        confirmBooking(passengerCount);
+        confirmBooking(count);
     };
 }
 
-function confirmBooking(count) {
+async function confirmBooking(count) {
 
     if (!selectedClass) return;
 
@@ -98,6 +105,15 @@ function confirmBooking(count) {
     route.classes[selectedClass].seats -= count;
 
     let total = route.classes[selectedClass].price * count;
+
+    await supabase.from("bookings").insert([
+        {
+            route: route.path.join(" → "),
+            class: selectedClass,
+            passengers: names,
+            total: total
+        }
+    ]);
 
     const ticketText = `
 BOOKING CONFIRMED

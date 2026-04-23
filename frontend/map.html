@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Route Map</title>
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+</head>
+<body>
+
+<canvas id="bgCanvas"></canvas>
+
+<div class="top-bar">
+    <button class="back-btn" onclick="goBack()">Back</button>
+    <h1>Route Optimization Map</h1>
+</div>
+
+<div class="search-box">
+    <select id="source"></select>
+    <select id="destination"></select>
+    <button onclick="filterRoutes()">Show Routes</button>
+</div>
+
+<div id="routeOptions" class="routes"></div>
+
+<div id="mapContainer">
+    <div id="map"></div>
+</div>
+
+<script src="map.js"></script>
+<script src="background.js"></script>
+
+</body>
+</html>

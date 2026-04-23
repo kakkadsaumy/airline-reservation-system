@@ -143,3 +143,18 @@ Status: CONFIRMED
     link.download = "ticket.txt";
     link.click();
 }
+
+anime({
+    targets: 'body',
+    opacity: [0, 1],
+    duration: 800,
+    easing: 'easeOutQuad'
+});
+
+anime({
+    targets: 'h1',
+    opacity: [0, 1],
+    translateY: [-30, 0],
+    duration: 1000,
+    easing: 'easeOutExpo'
+});

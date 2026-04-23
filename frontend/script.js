@@ -16,16 +16,16 @@ async function populateCities() {
     const dest = document.getElementById("destination");
 
     cities.forEach(city => {
-        let opt1 = document.createElement("option");
-        opt1.value = city.toLowerCase();
-        opt1.text = city;
+        let o1 = document.createElement("option");
+        o1.value = city.toLowerCase();
+        o1.text = city;
 
-        let opt2 = document.createElement("option");
-        opt2.value = city.toLowerCase();
-        opt2.text = city;
+        let o2 = document.createElement("option");
+        o2.value = city.toLowerCase();
+        o2.text = city;
 
-        source.appendChild(opt1);
-        dest.appendChild(opt2);
+        source.appendChild(o1);
+        dest.appendChild(o2);
     });
 }
 
@@ -47,11 +47,6 @@ async function loadRoutes() {
     const container = document.getElementById("routesContainer");
     container.innerHTML = "";
 
-    if (filtered.length === 0) {
-        container.innerHTML = "<p>No routes found</p>";
-        return;
-    }
-
     filtered.forEach(r => {
 
         const div = document.createElement("div");
@@ -67,11 +62,44 @@ async function loadRoutes() {
 
         container.appendChild(div);
     });
+
+    anime({
+        targets: '.card',
+        opacity: [0,1],
+        translateY: [40,0],
+        delay: anime.stagger(120),
+        duration: 700,
+        easing: 'easeOutExpo'
+    });
 }
 
 function selectRoute(route) {
     localStorage.setItem("selectedRoute", JSON.stringify(route));
     window.location.href = "booking.html";
 }
+
+document.addEventListener("click", e => {
+    if (e.target.tagName === "BUTTON") {
+        anime({
+            targets: e.target,
+            scale: [1, 0.95, 1],
+            duration: 200
+        });
+    }
+});
+
+anime({
+    targets: 'body',
+    opacity: [0,1],
+    duration: 800
+});
+
+anime({
+    targets: 'h1',
+    opacity: [0,1],
+    translateY: [-30,0],
+    duration: 1000,
+    easing: 'easeOutExpo'
+});
 
 populateCities();

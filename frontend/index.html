@@ -1,22 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Airline Booking</title>
+    <title>Airline System</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 </head>
 <body>
 
-<h1>✈️ Airline Booking</h1>
+<canvas id="bgCanvas"></canvas>
+
+<h1>Airline Booking</h1>
 
 <div class="search-box">
     <select id="source"></select>
     <select id="destination"></select>
     <button onclick="loadRoutes()">Search Flights</button>
+    <button class="secondary" onclick="window.location.href='map.html'">View Route Map</button>
 </div>
 
 <div id="routesContainer" class="routes"></div>
 
 <script src="script.js"></script>
+<script src="background.js"></script>
 
 </body>
 </html>

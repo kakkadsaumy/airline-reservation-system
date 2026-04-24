@@ -9,9 +9,13 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
 const cities = {
     "New Delhi": [28.6139, 77.2090],
+    "Mumbai": [19.0760, 72.8777],
     "Dubai": [25.2048, 55.2708],
     "London": [51.5074, -0.1278],
-    "New York": [40.7128, -74.0060]
+    "Paris": [48.8566, 2.3522],
+    "New York": [40.7128, -74.0060],
+    "Singapore": [1.3521, 103.8198],
+    "Tokyo": [35.6762, 139.6503]
 };
 
 Object.keys(cities).forEach(city => {
@@ -97,7 +101,12 @@ function filterRoutes() {
 }
 
 function drawRoute(route) {
-    const coords = route.path.map(city => cities[city]);
+
+    const coords = route.path
+        .map(city => cities[city])
+        .filter(c => c !== undefined);
+
+    if (coords.length < 2) return;
 
     const line = L.polyline(coords, { color: '#3b82f6' }).addTo(map);
     drawnLines.push(line);

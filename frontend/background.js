@@ -1,37 +1,72 @@
 const canvas = document.getElementById("bgCanvas");
 const ctx = canvas.getContext("2d");
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener("resize", resize);
 
-let particles = [];
+const gridSize = 40;
+let offset = 0;
+let glitches = [];
 
-for (let i = 0; i < 80; i++) {
-    particles.push({
+function draw() {
+
+    ctx.fillStyle = "rgba(2,6,23,0.4)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    drawGrid();
+    drawGlitches();
+
+    offset += 0.3;
+
+    requestAnimationFrame(draw);
+}
+
+function drawGrid() {
+
+    ctx.strokeStyle = "rgba(0,255,255,0.15)";
+    ctx.lineWidth = 1;
+
+    for (let x = 0; x < canvas.width; x += gridSize) {
+        ctx.beginPath();
+        ctx.moveTo(x + offset % gridSize, 0);
+        ctx.lineTo(x + offset % gridSize, canvas.height);
+        ctx.stroke();
+    }
+
+    for (let y = 0; y < canvas.height; y += gridSize) {
+        ctx.beginPath();
+        ctx.moveTo(0, y + offset % gridSize);
+        ctx.lineTo(canvas.width, y + offset % gridSize);
+        ctx.stroke();
+    }
+}
+
+function spawnGlitch() {
+    glitches.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        dx: (Math.random() - 0.5) * 0.5,
-        dy: (Math.random() - 0.5) * 0.5
+        width: Math.random() * 200 + 50,
+        height: Math.random() * 3 + 1,
+        life: 20
     });
 }
 
-function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+setInterval(spawnGlitch, 200);
 
-    particles.forEach(p => {
-        ctx.fillStyle = "#3b82f6";
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
-        ctx.fill();
+function drawGlitches() {
 
-        p.x += p.dx;
-        p.y += p.dy;
+    ctx.fillStyle = "rgba(255,0,150,0.8)";
 
-        if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
-        if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+    glitches.forEach(g => {
+        ctx.fillRect(g.x, g.y, g.width, g.height);
+        g.life--;
     });
 
-    requestAnimationFrame(draw);
+    glitches = glitches.filter(g => g.life > 0);
 }
 
 draw();

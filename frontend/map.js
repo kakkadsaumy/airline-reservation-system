@@ -5,7 +5,7 @@ function goBack() {
 
 const map = L.map('map').setView([20, 0], 2);
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png').addTo(map);
 
 const cities = {
     "New Delhi": [28.6139, 77.2090],

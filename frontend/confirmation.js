@@ -43,5 +43,19 @@ window.confirmBooking = async function () {
 
     localStorage.setItem("latestBooking", JSON.stringify(bookingData));
 
+    try {
+        await supabase.from("bookings").insert([
+            {
+                name: bookingData.name,
+                route: bookingData.route,
+                class: bookingData.class,
+                passengers: bookingData.count,
+                total: bookingData.total
+            }
+        ]);
+    } catch (err) {
+        console.log("Supabase error:", err);
+    }
+
     window.location.href = "confirmation.html";
 };

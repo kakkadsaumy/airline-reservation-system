@@ -1,61 +1,70 @@
-window.confirmBooking = async function () {
+function formatName(name) {
+    return name
+        .toLowerCase()
+        .split(" ")
+        .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+        .join(" ");
+}
 
-    const passengers = document.querySelectorAll("#form .card");
+const data = JSON.parse(localStorage.getItem("latestBooking"));
 
-    let valid = true;
-    let names = [];
+const container = document.getElementById("ticket");
 
-    passengers.forEach(p => {
+const bookingId = "VITM" + Math.floor(Math.random() * 1000000);
 
-        const inputs = p.querySelectorAll("input");
+if (data) {
 
-        inputs.forEach(i => {
-            if (!i.value) valid = false;
-        });
+    let passengersHTML = "";
 
-        const passport = inputs[5].value;
-        if (!/^[A-Z][0-9]{7}$/.test(passport)) {
-            valid = false;
-            alert("Invalid passport format (Example: A1234567)");
-        }
-
-        names.push(inputs[0].value + " " + inputs[1].value);
+    data.passengers.forEach((p, i) => {
+        passengersHTML += `
+            <div class="passenger-block">
+                <p><strong>${i + 1}. ${formatName(p.firstName + " " + p.lastName)}</strong></p>
+                <p>Passport: ${p.passport}</p>
+                <p>Age: ${p.age} | ${p.gender}</p>
+            </div>
+        `;
     });
 
-    if (!valid) {
-        alert("Please fill all fields correctly");
-        return;
-    }
+    container.innerHTML = `
+        <div class="ticket" id="ticketContent">
 
-    const selectedClass = document.getElementById("classSelect").value;
-    const count = passengers.length;
+            <div class="ticket-header">
+                <h2>VIT-M Airlines</h2>
+                <span>${bookingId}</span>
+            </div>
 
-    const price = route.classes[selectedClass].price;
-    const total = Math.round(price * count);
+            <div class="ticket-route">
+                <h3>${data.route}</h3>
+            </div>
 
-    const bookingData = {
-        name: names[0],
-        route: route.path.join(" → "),
-        class: selectedClass.toUpperCase(),
-        count,
-        total
-    };
+            <div class="ticket-details">
+                <p><strong>Class:</strong> ${data.class}</p>
+                <p><strong>Passengers:</strong> ${data.count}</p>
+                <p><strong>Total:</strong> $${data.total}</p>
+            </div>
 
-    localStorage.setItem("latestBooking", JSON.stringify(bookingData));
+            <div class="ticket-passengers">
+                ${passengersHTML}
+            </div>
 
-    try {
-        await supabase.from("bookings").insert([
-            {
-                name: bookingData.name,
-                route: bookingData.route,
-                class: bookingData.class,
-                passengers: bookingData.count,
-                total: bookingData.total
-            }
-        ]);
-    } catch (err) {
-        console.log("Supabase error:", err);
-    }
+            <div class="ticket-footer">
+                STATUS: CONFIRMED
+            </div>
 
-    window.location.href = "confirmation.html";
+        </div>
+    `;
+}
+
+window.downloadTicket = async function () {
+
+    const { jsPDF } = window.jspdf;
+    const ticket = document.getElementById("ticketContent");
+
+    const canvas = await html2canvas(ticket);
+    const imgData = canvas.toDataURL("image/png");
+
+    const pdf = new jsPDF();
+    pdf.addImage(imgData, "PNG", 10, 10, 180, 120);
+    pdf.save("VITM-Ticket.pdf");
 };

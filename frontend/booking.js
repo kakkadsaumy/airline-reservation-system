@@ -6,24 +6,31 @@ const form = document.getElementById("form");
 let passengerCount = 1;
 
 bookingCard.innerHTML = `
-    <div class="card">
+    <div class="card" style="text-align:center;">
+
         <h3>${route.path.join(" → ")}</h3>
 
-        <label>Class</label>
-        <select id="classSelect">
-            <option value="economy">Economy ($${route.classes.economy.price})</option>
-            <option value="business">Business ($${route.classes.business.price})</option>
-            <option value="first">First ($${route.classes.first.price})</option>
-        </select>
-
-        <label>Passengers</label>
-        <div class="passenger-control">
-            <button type="button" onclick="changePassengers(-1)">-</button>
-            <span id="passengerCount">1</span>
-            <button type="button" onclick="changePassengers(1)">+</button>
+        <div style="margin-top:15px;">
+            <label style="display:block; margin-bottom:6px;">Class</label>
+            <select id="classSelect" style="width:100%;">
+                <option value="economy">Economy ($${route.classes.economy.price})</option>
+                <option value="business">Business ($${route.classes.business.price})</option>
+                <option value="first">First ($${route.classes.first.price})</option>
+            </select>
         </div>
 
-        <button type="button" onclick="generateForms()">Continue</button>
+        <div style="margin-top:20px;">
+            <label style="display:block; margin-bottom:10px;">Passengers</label>
+
+            <div class="passenger-control">
+                <button type="button" onclick="changePassengers(-1)">-</button>
+                <span id="passengerCount">1</span>
+                <button type="button" onclick="changePassengers(1)">+</button>
+            </div>
+        </div>
+
+        <button type="button" style="margin-top:20px;" onclick="generateForms()">Continue</button>
+
     </div>
 `;
 

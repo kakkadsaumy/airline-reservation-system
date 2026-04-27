@@ -8,65 +8,119 @@ function resize() {
 resize();
 window.addEventListener("resize", resize);
 
-const gridSize = 40;
-let offset = 0;
-let glitches = [];
+let angle = 0;
+const speed = 0.009;
 
-function draw() {
+const planes = [];
 
-    ctx.fillStyle = "rgba(2,6,23,0.4)";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    drawGrid();
-    drawGlitches();
-
-    offset += 0.3;
-
-    requestAnimationFrame(draw);
+for (let i = 0; i < 12; i++) {
+    planes.push({
+        r: Math.random() * 250,
+        t: Math.random() * Math.PI * 2,
+        heading: Math.random() * 360,
+        visible: 0
+    });
 }
 
-function drawGrid() {
+function drawRadar(cx, cy) {
 
-    ctx.strokeStyle = "rgba(0,255,255,0.15)";
+    const maxR = 300;
+
+    ctx.strokeStyle = "rgba(0,255,120,0.12)";
     ctx.lineWidth = 1;
 
-    for (let x = 0; x < canvas.width; x += gridSize) {
+    for (let r = 60; r <= maxR; r += 60) {
         ctx.beginPath();
-        ctx.moveTo(x + offset % gridSize, 0);
-        ctx.lineTo(x + offset % gridSize, canvas.height);
+        ctx.arc(cx, cy, r, 0, Math.PI * 2);
         ctx.stroke();
     }
 
-    for (let y = 0; y < canvas.height; y += gridSize) {
+    for (let i = 0; i < 360; i += 30) {
+        const rad = i * Math.PI / 180;
         ctx.beginPath();
-        ctx.moveTo(0, y + offset % gridSize);
-        ctx.lineTo(canvas.width, y + offset % gridSize);
+        ctx.moveTo(cx, cy);
+        ctx.lineTo(cx + Math.cos(rad) * maxR, cy + Math.sin(rad) * maxR);
         ctx.stroke();
     }
-}
 
-function spawnGlitch() {
-    glitches.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        width: Math.random() * 200 + 50,
-        height: Math.random() * 3 + 1,
-        life: 20
+    const sweepWidth = 0.45;
+
+    const gradient = ctx.createRadialGradient(cx, cy, 0, cx, cy, maxR);
+    gradient.addColorStop(0, "rgba(0,255,120,0.25)");
+    gradient.addColorStop(1, "transparent");
+
+    ctx.fillStyle = gradient;
+
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, maxR, angle, angle + sweepWidth);
+    ctx.closePath();
+    ctx.fill();
+
+    const prevAngle = angle;
+    let nextAngle = angle + speed;
+    if (nextAngle > Math.PI * 2) nextAngle -= Math.PI * 2;
+
+    planes.forEach(p => {
+
+        p.t += 0.001;
+        if (p.t > Math.PI * 2) p.t -= Math.PI * 2;
+
+        const x = cx + Math.cos(p.t) * p.r;
+        const y = cy + Math.sin(p.t) * p.r;
+
+        let crossed;
+
+        if (prevAngle < nextAngle) {
+            crossed = p.t >= prevAngle && p.t <= nextAngle;
+        } else {
+            crossed = p.t >= prevAngle || p.t <= nextAngle;
+        }
+
+        if (crossed && p.visible < 0.01) {
+            p.visible = 1;
+        }
+
+        p.visible -= 0.04;
+        if (p.visible < 0) p.visible = 0;
+
+        if (p.visible > 0) {
+
+            ctx.save();
+
+            ctx.translate(x, y);
+            ctx.rotate((p.heading * Math.PI) / 180);
+
+            const color = p.visible > 0.7 ? "#ffff66" : "#00ff78";
+
+            ctx.fillStyle = color;
+            ctx.shadowColor = color;
+            ctx.shadowBlur = 10;
+
+            ctx.font = "14px monospace";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+
+            ctx.fillText("✈", 0, 0);
+
+            ctx.restore();
+        }
     });
+
+    angle = nextAngle;
 }
 
-setInterval(spawnGlitch, 200);
+function animate() {
 
-function drawGlitches() {
+    ctx.fillStyle = "#030805";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    ctx.fillStyle = "rgba(255,0,150,0.8)";
+    const cx = canvas.width / 2;
+    const cy = canvas.height / 2;
 
-    glitches.forEach(g => {
-        ctx.fillRect(g.x, g.y, g.width, g.height);
-        g.life--;
-    });
+    drawRadar(cx, cy);
 
-    glitches = glitches.filter(g => g.life > 0);
+    requestAnimationFrame(animate);
 }
 
-draw();
+animate();

@@ -1,10 +1,6 @@
 let allRoutes = [];
 
-// =====================
-// LOAD CITIES
-// =====================
 async function populateCities() {
-
     const res = await fetch('routes.json');
     const data = await res.json();
 
@@ -32,11 +28,7 @@ async function populateCities() {
     });
 }
 
-// =====================
-// LOAD ROUTES
-// =====================
 async function loadRoutes() {
-
     const source = document.getElementById("source").value;
     const dest = document.getElementById("destination").value;
 
@@ -54,7 +46,6 @@ async function loadRoutes() {
     container.innerHTML = "";
 
     filtered.forEach(r => {
-
         const div = document.createElement("div");
         div.className = "card";
 
@@ -79,17 +70,11 @@ async function loadRoutes() {
     });
 }
 
-// =====================
-// SELECT ROUTE
-// =====================
 function selectRoute(route) {
     localStorage.setItem("selectedRoute", JSON.stringify(route));
     window.location.href = "booking.html";
 }
 
-// =====================
-// BUTTON CLICK EFFECT
-// =====================
 document.addEventListener("click", e => {
     if (e.target.tagName === "BUTTON") {
         anime({
@@ -100,9 +85,6 @@ document.addEventListener("click", e => {
     }
 });
 
-// =====================
-// PAGE ANIMATION
-// =====================
 anime({
     targets: 'body',
     opacity: [0,1],
@@ -119,9 +101,6 @@ anime({
 
 populateCities();
 
-// =====================
-// RADAR ANIMATION
-// =====================
 anime({
     targets: '.r1',
     rotate: 360,
@@ -155,9 +134,6 @@ anime({
     easing: 'easeInOutSine'
 });
 
-// =====================
-// HUD ANIMATION
-// =====================
 anime({
     targets: '.hud-circle',
     rotate: 360,
@@ -175,9 +151,6 @@ anime({
     easing: 'easeInOutSine'
 });
 
-// =====================
-// ✈️ PLANE CURSOR SYSTEM (SMOOTH)
-// =====================
 const plane = document.getElementById("planeCursor");
 
 let mouseX = window.innerWidth / 2;
@@ -192,7 +165,6 @@ document.addEventListener("mousemove", e => {
 });
 
 function animatePlane() {
-
     planeX += (mouseX - planeX) * 0.15;
     planeY += (mouseY - planeY) * 0.15;
 
@@ -211,11 +183,7 @@ function animatePlane() {
 
 animatePlane();
 
-// =====================
-// TRAIL SYSTEM (SMOOTH + LIGHT)
-// =====================
 function createTrail(x, y) {
-
     const trail = document.createElement("div");
     trail.className = "trail";
 

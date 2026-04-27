@@ -23,7 +23,6 @@ for (let i = 0; i < 12; i++) {
 }
 
 function drawRadar(cx, cy) {
-
     const maxR = 300;
 
     ctx.strokeStyle = "rgba(0,255,120,0.12)";
@@ -62,7 +61,6 @@ function drawRadar(cx, cy) {
     if (nextAngle > Math.PI * 2) nextAngle -= Math.PI * 2;
 
     planes.forEach(p => {
-
         p.t += 0.001;
         if (p.t > Math.PI * 2) p.t -= Math.PI * 2;
 
@@ -85,9 +83,7 @@ function drawRadar(cx, cy) {
         if (p.visible < 0) p.visible = 0;
 
         if (p.visible > 0) {
-
             ctx.save();
-
             ctx.translate(x, y);
             ctx.rotate((p.heading * Math.PI) / 180);
 
@@ -111,7 +107,6 @@ function drawRadar(cx, cy) {
 }
 
 function animate() {
-
     ctx.fillStyle = "#030805";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 

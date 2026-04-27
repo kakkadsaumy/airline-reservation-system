@@ -65,7 +65,6 @@ function clearMap() {
 }
 
 function filterRoutes() {
-
     clearMap();
 
     const source = document.getElementById("source").value;
@@ -80,7 +79,6 @@ function filterRoutes() {
     container.innerHTML = "";
 
     filtered.forEach(route => {
-
         const btn = document.createElement("button");
         btn.innerText = route.path.join(" → ");
 
@@ -101,7 +99,6 @@ function filterRoutes() {
 }
 
 function drawRoute(route) {
-
     const coords = route.path
         .map(city => cities[city])
         .filter(c => c !== undefined);

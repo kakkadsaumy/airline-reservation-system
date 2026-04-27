@@ -7,9 +7,7 @@ let passengerCount = 1;
 
 bookingCard.innerHTML = `
     <div class="card" style="text-align:center;">
-
         <h3>${route.path.join(" → ")}</h3>
-
         <div style="margin-top:15px;">
             <label style="display:block; margin-bottom:6px;">Class</label>
             <select id="classSelect" style="width:100%;">
@@ -18,19 +16,15 @@ bookingCard.innerHTML = `
                 <option value="first">First ($${route.classes.first.price})</option>
             </select>
         </div>
-
         <div style="margin-top:20px;">
             <label style="display:block; margin-bottom:10px;">Passengers</label>
-
             <div class="passenger-control">
                 <button type="button" onclick="changePassengers(-1)">-</button>
                 <span id="passengerCount">1</span>
                 <button type="button" onclick="changePassengers(1)">+</button>
             </div>
         </div>
-
         <button type="button" style="margin-top:20px;" onclick="generateForms()">Continue</button>
-
     </div>
 `;
 
@@ -50,11 +44,9 @@ window.generateForms = function () {
         form.innerHTML += `
             <div class="card">
                 <h3>Passenger ${i + 1}</h3>
-
                 <input placeholder="First Name" required>
                 <input placeholder="Last Name" required>
                 <input type="email" placeholder="Email" required>
-
                 <div style="display:flex; gap:8px;">
                     <select>
                         <option value="+1">+1 (US/CA)</option>
@@ -78,18 +70,14 @@ window.generateForms = function () {
                         <option value="+66">+66 (Thailand)</option>
                         <option value="+62">+62 (Indonesia)</option>
                     </select>
-
                     <input placeholder="Phone Number" required style="flex:1;">
                 </div>
-
                 <input type="number" placeholder="Age" required>
-
                 <select>
                     <option value="M">M</option>
                     <option value="F">F</option>
                     <option value="T">T</option>
                 </select>
-
                 <input placeholder="Passport (A1234567)" required>
             </div>
         `;
@@ -101,14 +89,12 @@ window.generateForms = function () {
 };
 
 window.confirmBooking = async function () {
-
     const passengerCards = document.querySelectorAll("#form .card");
 
     let valid = true;
     let passengers = [];
 
     passengerCards.forEach(p => {
-
         const inputs = p.querySelectorAll("input");
         const selects = p.querySelectorAll("select");
 

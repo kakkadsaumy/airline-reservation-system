@@ -7,6 +7,7 @@
 #include <cstdlib>
 
 #include "route_engine.h"
+#include <corecrt_math_defines.h>
 
 using namespace std;
 
@@ -92,7 +93,7 @@ int main() {
             string s = normalize(cities[i].name);
             string e = normalize(cities[j].name);
 
-            auto routes = engine.getTopRoutes(s, e, 2);
+            auto routes = engine.getTopRoutes(s, e, 8);
 
             for (auto &r : routes) {
                 if (!firstRoute) file << ",";
@@ -103,8 +104,13 @@ int main() {
 
                 double base = distance * 0.08 + stops * 150 + (rand() % 200);
 
+                string flightNo = "VIT-" + to_string(rand() % 900 + 100);
+                double duration = distance / 800.0 + stops * 1.5;
+
                 file << "{ \"from\": \"" << cities[i].name << "\", ";
                 file << "\"to\": \"" << cities[j].name << "\", ";
+                file << "\"flight\": \"" << flightNo << "\", ";
+                file << "\"duration\": " << duration << ", ";
                 file << "\"path\": [";
 
                 for (int k = 0; k < r.second.size(); k++) {

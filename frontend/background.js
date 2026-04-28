@@ -1,6 +1,8 @@
 const canvas = document.getElementById("bgCanvas");
 const ctx = canvas.getContext("2d");
 
+window.radar = { cx: 0, cy: 0, radius: 300 };
+
 function resize() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -24,6 +26,10 @@ for (let i = 0; i < 12; i++) {
 
 function drawRadar(cx, cy) {
     const maxR = 300;
+
+    window.radar.cx = cx;
+    window.radar.cy = cy;
+    window.radar.radius = maxR;
 
     ctx.strokeStyle = "rgba(0,255,120,0.12)";
     ctx.lineWidth = 1;

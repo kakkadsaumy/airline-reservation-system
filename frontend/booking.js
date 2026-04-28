@@ -140,7 +140,7 @@ window.confirmBooking = async function () {
     localStorage.setItem("latestBooking", JSON.stringify(bookingData));
 
     try {
-        await supabase.from("bookings").insert([{
+        await supabaseClient.from("bookings").insert([{
             route: bookingData.route,
             class: bookingData.class,
             passengers: JSON.stringify(passengers),

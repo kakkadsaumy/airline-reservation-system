@@ -72,14 +72,14 @@ int main() {
                 cities[j].lat, cities[j].lon
             );
 
-            if (dist < 9000) {
+            if (dist < 15000) {
                 engine.graph.addEdge(normalize(cities[i].name), normalize(cities[j].name), dist);
                 engine.graph.addEdge(normalize(cities[j].name), normalize(cities[i].name), dist);
             }
         }
     }
 
-    ofstream file("frontend/routes.json");
+    ofstream file("C:\\Users\\skakk\\Desktop\\airline-reservation-system\\airline-reservation-system\\frontend\\routes.json");
 
     file << "{ \"routes\": [";
 

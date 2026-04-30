@@ -91,7 +91,7 @@ routes.json
 ## How It Works
 
 1. The C++ program generates routes and pricing:
-2. 
+
 `g++ main.cpp graph.cpp route_engine.cpp pricing.cpp -I../include -o routes`
 
 `./routes.exe`

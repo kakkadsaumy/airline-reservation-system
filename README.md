@@ -97,7 +97,8 @@ routes.json
 `./routes.exe`
 
 2. Routes are saved in:
-frontend/routes.json
+
+`frontend/routes.json`
 
 3. The frontend reads this file and allows users to:
 - Search flights

@@ -91,8 +91,10 @@ routes.json
 ## How It Works
 
 1. The C++ program generates routes and pricing:
-g++ main.cpp graph.cpp route_engine.cpp pricing.cpp -I../include -o routes
-./routes.exe
+2. 
+`g++ main.cpp graph.cpp route_engine.cpp pricing.cpp -I../include -o routes`
+
+`./routes.exe`
 2. Routes are saved in:
 frontend/routes.json
 

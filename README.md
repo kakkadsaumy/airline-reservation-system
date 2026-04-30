@@ -45,9 +45,9 @@ The system uses the Haversine formula to compute distances between cities:
 
 ### Dynamic Pricing
 Pricing is computed based on distance and simulated demand:
-Base Price = 0.05 × Distance
-Demand Factor = 1 + (Booked Seats / Total Seats)
-Final Price = Base Price × Demand Factor
+`Base Price = 0.05 × Distance`
+`Demand Factor = 1 + (Booked Seats / Total Seats)`
+`Final Price = Base Price × Demand Factor`
 
 ## Tech Stack
 
@@ -66,18 +66,18 @@ Final Price = Base Price × Demand Factor
 - Supabase
 
 ## Project Structure
-/src
+`/src
 main.cpp
 graph.cpp
 route_engine.cpp
-pricing.cpp
+pricing.cpp`
 
-/include
+`/include
 graph.h
 route_engine.h
-pricing.h
+pricing.h`
 
-/frontend
+`/frontend
 index.html
 map.html
 booking.html
@@ -86,7 +86,7 @@ script.js
 map.js
 booking.js
 confirmation.js
-routes.json
+routes.json`
 
 ## How It Works
 
